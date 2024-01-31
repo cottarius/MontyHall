@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class MontyHall {
     static Random random = new Random();
@@ -16,6 +18,12 @@ public class MontyHall {
         System.out.printf("Если НЕ менять дверь, то шанс выиграть приз - %s из 1000 (%.1f%%)", result2, (double) result2 / 1000 * 100);
     }
 
+    /**
+     * Подсчёт количества выигрышей
+     * @param hashMap контейнер для сложения результатов
+     * @param flag true - выбор другой двери, false - повторный выбор текущей двери
+     * @return количество побед
+     */
     private static long countWinResult(HashMap<Integer, Boolean> hashMap, boolean flag) {
         for (int i = 0; i < ITERATION_COUNT; i++) {
             ArrayList<Boolean> doors = initDoors();
@@ -28,6 +36,11 @@ public class MontyHall {
         return doors.get(random.nextInt(COUNT_OF_DOORS));
     }
 
+    /**
+     * Выбор другой двери после предложения ведущего сменить дверь
+     * @param doors список дверей с одним true элементом
+     * @return измененный другой, измененный на true, элемент списка
+     */
     static boolean chooseAnotherDoor(ArrayList<Boolean> doors) {
         int choice = random.nextInt(COUNT_OF_DOORS);
         int suggestion = 0;
@@ -45,8 +58,12 @@ public class MontyHall {
         return doors.get(newChoice);
     }
 
+    /**
+     * Иництализация списка с одним true элементом (остальные - false)
+     * @return список элементов
+     */
     static ArrayList<Boolean> initDoors() {
-        ArrayList<Boolean> doors = new ArrayList<>(COUNT_OF_DOORS);
+        ArrayList<Boolean> doors = new ArrayList<>();
         int index = random.nextInt(COUNT_OF_DOORS);
         for (int i = 0; i < COUNT_OF_DOORS; i++) {
             doors.add(i == index);
